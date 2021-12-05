@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>瓦片地图示例</title>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" /> -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/leaflet/1.7.1/leaflet.min.css" rel="stylesheet">
+    <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/leaflet/1.7.1/leaflet.min.js"></script>
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/titatoggle/2.1.2/titatoggle-dist-min.css" rel="stylesheet">
+      
+    <link rel="stylesheet" href="static/leaflet-geoman.css" />  
+
+
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navigation-clean nav-tabs" style="padding:0px; margin: 0px;">
+        <div class="container">
+            
+            <button data-toggle="collapse" class="navbar-toggle collapsed" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="active">
+                        <a href="#guide" data-toggle="tab">
+                            财大导航
+                            
+                        </a>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div id="myTabContent" class="tab-content">
+        
+        <div class="tab-pane fade in active" id="guide">
+            <div class="row" style="margin-left: 3px;">
+                <div class="panel panel-primary col-md-6" style="padding: 0px; height: 800px; width: 800px; ">
+                    <!-- <div class="panel-heading">财大地图</div> -->
+                    <div class="panel-body" style="padding: 5px;">
+                        <div id="lmap" style="height: 740px; width: 790px; "></div>
+                    </div>
+                    
+                    
+
+                </div>
+
+
+
+                <div class="panel panel-default col-md-4" style="padding:  0px; margin: 0px;">
+                    
+                    <div class="panel-body" style="padding-right:  0px;">
+                        <!-- <div class="checkbox checkbox-slider--b">
+                            <label>
+                                <input type="checkbox" id="editmode" style="padding:  0px; margin: 0px;">
+                                <span>编辑模式</span>
+                               </label>
+                        </div> -->
+                        <div class="input-group">
+                            <input class="btn btn-default" type="button" id = "showmap" value="推荐最短路径">
+                            <input class="btn btn-default" type="button" id = "download" value="更新地图">
+                            
+                            
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">预计路程</span>
+                            <input type="text" class="form-control" placeholder="/m" aria-describedby="title" id="shortMile" disabled>
+                        </div>
+                        
+                        
+                        
+                            
+                        
+
+                        
+                    </div>
+                    
+                </div>
+
+
+                <div class="panel panel-default col-md-5" style="padding: 0px;">
+                    
+                    <div class="panel-body pane1 ">
+                        <button type="button" class="btn btn-success st_select" >选择出发地</button>
+                        <button type="button" class="btn btn-primary st_update">信息更新</button>
+                        
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="media-object _views" src="./static/xd_dy.jpg" alt="" style="width: 260px;">
+                            </div>
+                            
+                            <div class="media-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon">地点名称</span>
+                                    <input type="text" class="form-control title" placeholder="地点名称" aria-describedby="title">
+                                </div>
+                        
+                                <div class="input-group">
+                                    <span class="input-group-addon">图片链接</span>
+                                    <input type="text" class="form-control view_pics" placeholder="200" aria-describedby="state">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    
+                </div>
+
+                <div class="panel panel-default col-md-5" style="padding: 0px;" id="">
+                    
+                    <div class="panel-body pane2">
+                        <button type="button" class="btn btn-success st_select" >选择目的地</button>
+                        <button type="button" class="btn btn-primary st_update">信息更新</button>
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="media-object _views" src="./static/xd_dy.jpg" alt="" style="width: 260px;">
+                            </div>
+                            
+                            <div class="media-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon">地点名称</span>
+                                    <input type="text" class="form-control title" placeholder="地点名称" aria-describedby="title">
+                                </div>
+                        
+                                <div class="input-group">
+                                    <span class="input-group-addon">图片链接</span>
+                                    <input type="text" class="form-control view_pics" placeholder="200" aria-describedby="state">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+            
+            </div>
+            
+            
+            
+            
+
+        </div>
+        
+    </div>
+
+
+
+
+
+
+    
+
+
+
+    
+        
+
+
+
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!-- <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script> -->
+
+        <!-- bootstrap-table.min.js -->
+        <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+        <!-- 引入中文语言包 -->
+        <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+
+        <script src="https://cdn.bootcdn.net/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="static/leaflet-geoman.min.js"></script>  
+
+        
+        
+        
+        <script type="module">
+            import {log} from './log.js';            
+            import {
+                mapJsonInfo,
+                Jsonload,
+                infopack,
+                modal,
+                getDotID,
+                pairhash,
+                clickbind,
+                pathBlue,
+                lenCalc
+                
+            }   from './grahGeo.js';
+            
+
+            // 图创建
+            var map = L.map('lmap', { 
+                crs: L.CRS.Simple, 
+                minZoom: 2, 
+                maxZoom: 6, 
+                maxNativeZoom: 6,
+            });
+
+            var opt = { tileSize: L.point(133, 188) };
+            L.tileLayer('../wapian/tiles/{z}/{x}/{y}.png', opt).addTo(map)
+            map.setView([-94, 66], 4);
+
+            map.pm.addControls({  
+                position: 'topleft',  
+                drawCircle: false,  
+            });  
+
+            
+
+            // 点数据加载
+            var dots;
+            
+            if(localStorage.getItem("pointsINFO") == null) {
+                $.ajaxSettings.async = false;
+                $.getJSON("src/points.json", function (json) {
+                    localStorage.setItem("pointsINFO",JSON.stringify(json) );
+                });
+                $.ajaxSettings.async = true;
+            } 
+            dots = JSON.parse(localStorage.getItem("pointsINFO"));
+
+            Jsonload(dots,map);
+
+
+            var pane_switch = 1;
+
+            // 给标记绑定事件
+            var mk_lin = {
+                latest : "",
+                pane1 : "",
+                pane2 : "",
+                pane3 : "",  // 边编辑 
+                update : function() {
+                    var paneSw ;
+                    if(pane_switch == 1) {
+                        paneSw = ".pane1";  this.pane1 = this.latest;
+                    } else if(pane_switch == 2){
+                        paneSw = ".pane2";  this.pane2 = this.latest;
+                    }
+
+                    
+                    $(paneSw + " .title").val(this.latest.details.title);
+                    $(paneSw + " .view_pics").val(this.latest.details.view_pics[0]);
+                    $(paneSw + " ._views")[0].src = this.latest.details.view_pics[0];
+                }
+            };
+
+            clickbind( map.pm.getGeomanLayers(),mk_lin);
+            
+            var modal1 = modal.Build(map.pm.getGeomanLayers());
+            
+
+            $("#editmode").click( function() {
+                if(pane_switch == 1)    pane_switch = 2;
+                else pane_switch = 1; 
+            })
+           
+
+            $("#showmap").click(function() {
+            
+                // map.pm.getGeomanLayers(); 获取所有绘制的图层
+
+                let red = modal.dijkstra(mk_lin.pane1.details.hash,mk_lin.pane2.details.hash,modal1);
+
+                // 绘制最短路径成红色
+                for(let j in red.need) {
+                    red.need[j].edge.setStyle({
+                        color : "red"
+                    })
+                }
+
+                // 提供路径长度推测
+                $("#shortMile").val(Math.round(red.sum) + "m (大约"+Math.round(red.sum)/100 + " ~ " + Math.round(red.sum/60) + "min)");
+            });
+            
+            var save_json;
+            $("#download").click(function() {
+                save_json = mapJsonInfo(map.pm.getGeomanLayers());
+                log("save_json",save_json);
+                log("qian",localStorage.getItem("pointsINFO"))
+                localStorage.setItem("pointsINFO",JSON.stringify(save_json) );
+                log("local" , JSON.parse(localStorage.getItem("pointsINFO")));
+            
+
+                // 寻路系统更新
+                modal1 = modal.Build(map.pm.getGeomanLayers())
+                
+                // 路径清空
+                pathBlue(map.pm.getGeomanLayers());
+
+                // 最短路模型的更新
+                modal1 = modal.Build(map.pm.getGeomanLayers());
+            });
+
+
+            $(".pane1 .st_select").click(function() {
+                pane_switch = 1;
+            });
+            $(".pane2 .st_select").click(function() {
+                pane_switch = 2;
+            });
+
+
+            // pane 更新提交
+            $(".pane1 .st_update").click(function() {
+                mk_lin.pane1.details.title = $(".pane1 .title").val();
+                mk_lin.pane1.details.view_pics[0] = $(".pane1 .view_pics").val();
+                $(".pane1 ._views")[0].src = $(".pane1 .view_pics").val();
+            });
+
+            $(".pane2 .st_update").click(function() {
+                mk_lin.pane2.details.title = $(".pane2 .title").val();
+                mk_lin.pane2.details.view_pics[0] = $(".pane2 .view_pics").val();
+                $(".pane2 ._views")[0].src = $(".pane2 .view_pics").val();
+            });
+
+
+            
+            // 点击 生成 触发保存机制
+        
+
+           
+
+
+
+            
+            // 创建 事件
+            map.on('pm:create',e=>{
+                log("绘制，e:",e);
+                let del = e.marker.details = {
+                    title :  "标题2",
+                };
+                if(e.shape == "Line") {
+                    
+                    e.marker.on("click",function(){
+                        this.setStyle( {
+                            color : "blue"
+                        })
+                        mk_lin.pane3 = this;
+                        // log(lenCalc(layers[i]._latlngs));
+                    })
+                    e.marker.details.len = lenCalc(e.marker._latlngs);
+                    log(e.marker.details.len);
+                    return;
+                } else if(e.shape == "Marker") {
+                    // 主要景点点标记
+                    e.marker.details.view_pics = ["./static/jiaoxuekeyan.jpg","图片地址1"];
+                } else if(e.shape == "CircleMarker") {
+                    // 节点标记 用来对路上节点进行标记
+                    e.marker.details.view_pics = ["./static/jiaoxuekeyan.jpg","图片地址1"]
+                }
+
+                e.marker.details.hash = pairhash(e.marker._latlng);
+                e.marker.on("click",function(c) {
+                    mk_lin.latest = this;
+                    mk_lin.update();
+                })
+
+            });
+
+
+        </script>
+
+        
+        
+        <script type= "module">
+            
+        </script>
+
+        
+
+</body>
+
+</html>
