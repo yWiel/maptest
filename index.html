@@ -210,7 +210,7 @@
             });
 
             var opt = { tileSize: L.point(133, 188) };
-            L.tileLayer('../wapian/tiles/{z}/{x}/{y}.png', opt).addTo(map)
+            L.tileLayer('./wapian/tiles/{z}/{x}/{y}.png', opt).addTo(map)
             map.setView([-94, 66], 4);
 
             map.pm.addControls({  
